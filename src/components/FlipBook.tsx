@@ -610,6 +610,14 @@ export function FlipBook({
                 right: flippedCount >= totalSheets ? 276 : -24,
               }}
             />
+            <div
+              aria-hidden="true"
+              className="book-ethereal-bloom pointer-events-none absolute -top-12 -bottom-12 -z-10 rounded-[36px]"
+              style={{
+                left: flippedCount === 0 ? 256 : -44,
+                right: flippedCount >= totalSheets ? 256 : -44,
+              }}
+            />
 
             {/* Central Spine Binding Ridge visible when opened */}
             {flippedCount > 0 && flippedCount < totalSheets && (

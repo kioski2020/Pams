@@ -11,6 +11,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { HeartQrModal } from './components/HeartQrModal';
 import { StarlightTrailCanvas } from './components/StarlightTrailCanvas';
 import { GalaxyHeartScene } from './components/GalaxyHeartScene';
+import { Gallery } from './components/Gallery';
 import {
   DEFAULT_BOOK_IMAGES,
   DEFAULT_SETTINGS,
@@ -88,6 +89,8 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(isQrMode);
   const [galaxyFadingFromHeart, setGalaxyFadingFromHeart] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryInitialIndex, setGalleryInitialIndex] = useState<number | null>(null);
 
   const timersRef = useRef<number[]>([]);
   const userInteractedMusicRef = useRef(false);
@@ -150,6 +153,8 @@ export default function App() {
   const handleBookFinished = useCallback(() => {
     clearPhaseTimers();
     setActiveNote('');
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
     setPhase('heart');
     setShowFireworks(true);
 
@@ -162,6 +167,8 @@ export default function App() {
   const handleReopenBook = useCallback(() => {
     clearPhaseTimers();
     setGalaxyFadingFromHeart(false);
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
     setShowFireworks(false);
     setShowGift(false);
     setPhase('book');
@@ -169,6 +176,8 @@ export default function App() {
 
   const handleOpenGalaxy = useCallback(() => {
     clearPhaseTimers();
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
     setShowFireworks(false);
     setShowGift(false);
     setGalaxyFadingFromHeart(true);
@@ -178,6 +187,16 @@ export default function App() {
     }, 360);
     timersRef.current.push(fadeTimer);
   }, [clearPhaseTimers]);
+
+  const handleOpenPhotoGallery = useCallback((initialIndex?: number) => {
+    setGalleryInitialIndex(typeof initialIndex === 'number' ? initialIndex : null);
+    setGalleryOpen(true);
+  }, []);
+
+  const handleClosePhotoGallery = useCallback(() => {
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
+  }, []);
 
   const handleBackToHeart = useCallback(() => {
     clearPhaseTimers();
@@ -194,6 +213,8 @@ export default function App() {
   const handleReplay = useCallback(() => {
     clearPhaseTimers();
     setGalaxyFadingFromHeart(false);
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
     setShowGift(false);
     setShowFireworks(false);
     setActiveNote('');
@@ -235,6 +256,8 @@ export default function App() {
     }
 
     clearPhaseTimers();
+    setGalleryOpen(false);
+    setGalleryInitialIndex(null);
     setShowGift(false);
     setShowFireworks(false);
     setActiveNote('');
@@ -322,6 +345,16 @@ export default function App() {
         onReopenBook={handleReopenBook}
         onReplay={handleReplay}
         onOpenGalaxy={handleOpenGalaxy}
+        onOpenPhotoGallery={handleOpenPhotoGallery}
+      />
+
+      {/* Layer 4A: Interactive Photo Gallery in Heart Phase */}
+      <Gallery
+        photos={allRotatingPhotos}
+        visible={phase === 'heart' && settings.enableHeart}
+        open={galleryOpen}
+        initialZoomIndex={galleryInitialIndex}
+        onClose={handleClosePhotoGallery}
       />
 
       {/* Layer 4B: 3D Galaxy Heart Finale */}

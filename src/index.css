@@ -150,6 +150,29 @@
   }
 }
 
+.book-ethereal-bloom {
+  opacity: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 240, 247, 0.3) 0%,
+    rgba(249, 168, 212, 0.22) 38%,
+    rgba(253, 230, 138, 0.14) 64%,
+    transparent 76%
+  );
+  filter: blur(30px);
+  transform: scale(0.97);
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    right 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-stage:hover .book-ethereal-bloom {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
 .book-3d {
   perspective: 2000px;
 }
@@ -165,7 +188,7 @@
   transform: rotateY(0deg);
   transition:
     transform 0.85s cubic-bezier(0.22, 0.72, 0.2, 1),
-    box-shadow 0.85s cubic-bezier(0.22, 0.72, 0.2, 1);
+    box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow:
     1px 1px 0 0 rgba(245, 232, 220, 0.85),
     3px 2px 0 0 rgba(226, 206, 192, 0.6),
@@ -174,12 +197,16 @@
   will-change: transform;
 }
 
-.book-page:hover {
+.book-page:hover,
+.book-page:focus-visible {
   box-shadow:
-    1px 1px 0 0 rgba(245, 232, 220, 0.9),
-    3px 2px 0 0 rgba(226, 206, 192, 0.65),
-    0 18px 36px rgba(255, 105, 180, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    1px 1px 0 0 rgba(255, 246, 240, 0.95),
+    3px 2px 0 0 rgba(245, 222, 212, 0.78),
+    0 0 18px rgba(255, 235, 245, 0.34),
+    0 0 42px rgba(244, 114, 182, 0.28),
+    0 12px 58px rgba(251, 191, 36, 0.16),
+    0 18px 34px rgba(0, 0, 0, 0.3),
+    inset 0 0 16px rgba(255, 245, 250, 0.28);
 }
 
 .book-page.flipped {
@@ -191,12 +218,16 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.book-page.flipped:hover {
+.book-page.flipped:hover,
+.book-page.flipped:focus-visible {
   box-shadow:
-    -1px 1px 0 0 rgba(245, 232, 220, 0.9),
-    -3px 2px 0 0 rgba(226, 206, 192, 0.65),
-    -18px 18px 36px rgba(255, 105, 180, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    -1px 1px 0 0 rgba(255, 246, 240, 0.95),
+    -3px 2px 0 0 rgba(245, 222, 212, 0.78),
+    0 0 18px rgba(255, 235, 245, 0.34),
+    0 0 42px rgba(244, 114, 182, 0.28),
+    -8px 12px 58px rgba(251, 191, 36, 0.16),
+    -18px 18px 34px rgba(0, 0, 0, 0.3),
+    inset 0 0 16px rgba(255, 245, 250, 0.28);
 }
 
 .book-page-face {
@@ -465,6 +496,28 @@
   animation: astralOrbitReverse 9s linear infinite;
 }
 
+@keyframes galleryTileReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .star,
   .animate-heartbeat,
@@ -480,6 +533,7 @@
     animation: none !important;
   }
   .book-page,
+  .book-ethereal-bloom,
   .envelope-flap-3d {
     transition-duration: 0.01ms !important;
   }

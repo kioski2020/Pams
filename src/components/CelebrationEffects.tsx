@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, RotateCcw, Sparkles } from 'lucide-react';
+import { BookOpen, LayoutGrid, RotateCcw, Sparkles } from 'lucide-react';
 import { DEFAULT_BOOK_IMAGES } from '../types/card';
 import { HeartEnvelope } from './HeartEnvelope';
 
@@ -14,6 +14,7 @@ interface CelebrationEffectsProps {
   onReopenBook: () => void;
   onReplay: () => void;
   onOpenGalaxy: () => void;
+  onOpenPhotoGallery: (initialIndex?: number) => void;
 }
 
 interface HeartPhotoNode {
@@ -69,6 +70,7 @@ export function CelebrationEffects({
   onReopenBook,
   onReplay,
   onOpenGalaxy,
+  onOpenPhotoGallery,
 }: CelebrationEffectsProps) {
   const [heartNodes, setHeartNodes] = useState<HeartPhotoNode[]>([]);
   const [photoOffset, setPhotoOffset] = useState(0);
@@ -289,17 +291,20 @@ export function CelebrationEffects({
           <div className="relative z-[5] h-full w-full pointer-events-none">
             {heartNodes.map((node) => {
               const validPool = photos.length > 0 ? photos : [node.src];
-              const activeSrc = validPool[(node.id + photoOffset) % validPool.length] || node.src;
+              const activePhotoIndex = (node.id + photoOffset) % validPool.length;
+              const activeSrc = validPool[activePhotoIndex] || node.src;
               const nodeScale = !node.visible ? 0 : isShiftingPhotos ? 0.86 : 1;
               const nodeOpacity = !node.visible ? 0 : isShiftingPhotos ? 0.25 : 1;
 
               return (
-                <img
+                <button
                   key={node.id}
-                  src={activeSrc}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                  className="fixed w-14 h-14 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl object-cover border-[3px] sm:border-[5px] border-white bg-white shadow-[0_0_20px_rgba(255,105,180,0.85)]"
+                  type="button"
+                  onClick={() => onOpenPhotoGallery(activePhotoIndex)}
+                  aria-label={`View memory photo ${activePhotoIndex + 1} in gallery`}
+                  className={`fixed w-14 h-14 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden border-[3px] sm:border-[5px] border-white bg-white shadow-[0_0_20px_rgba(255,105,180,0.85)] hover:z-30 hover:shadow-[0_0_28px_rgba(255,150,205,1)] focus-visible:outline-2 focus-visible:outline-pink-300 ${
+                    node.visible ? 'pointer-events-auto cursor-pointer' : 'pointer-events-none'
+                  }`}
                   style={{
                     left: '50%',
                     top: '47%',
@@ -308,9 +313,17 @@ export function CelebrationEffects({
                       ? `translate(calc(-50% + ${node.targetX.toFixed(1)}px), calc(-50% + ${node.targetY.toFixed(1)}px)) scale(${nodeScale})`
                       : 'translate(-50%, -50%) scale(0)',
                     transition:
-                      'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out',
+                      'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out, box-shadow 0.25s ease',
                   }}
-                />
+                >
+                  <img
+                    src={activeSrc}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
+                    draggable={false}
+                  />
+                </button>
               );
             })}
           </div>
@@ -323,25 +336,36 @@ export function CelebrationEffects({
             <button
               type="button"
               onClick={onReopenBook}
-              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full px-2.5 sm:px-3.5 py-1.5 font-medium transition hover:bg-white/10 whitespace-nowrap shrink-0 cursor-pointer"
+              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 font-medium transition hover:bg-white/10 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <BookOpen className="h-3.5 w-3.5 text-pink-300" />
-              <span>Reopen Card</span>
+              <span className="hidden sm:inline">Reopen Card</span>
+              <span className="sm:hidden">Card</span>
+            </button>
+            <span aria-hidden="true" className="h-4 w-px bg-white/15 shrink-0" />
+            <button
+              type="button"
+              onClick={() => onOpenPhotoGallery()}
+              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 font-medium text-amber-100 transition hover:bg-white/10 whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              <LayoutGrid className="h-3.5 w-3.5 text-amber-300" />
+              <span>Gallery</span>
             </button>
             <span aria-hidden="true" className="h-4 w-px bg-white/15 shrink-0" />
             <button
               type="button"
               onClick={onReplay}
-              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full px-2.5 sm:px-3 py-1.5 font-medium text-pink-200 transition hover:bg-white/10 whitespace-nowrap shrink-0 cursor-pointer"
+              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 font-medium text-pink-200 transition hover:bg-white/10 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              <span>Replay All</span>
+              <span className="hidden sm:inline">Replay All</span>
+              <span className="sm:hidden">Replay</span>
             </button>
             <span aria-hidden="true" className="h-4 w-px bg-white/15 shrink-0" />
             <button
               type="button"
               onClick={onOpenGalaxy}
-              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-400 px-3 sm:px-3.5 py-1.5 font-semibold text-white shadow-[0_0_18px_rgba(255,105,180,0.65)] transition hover:scale-105 hover:brightness-110 whitespace-nowrap shrink-0 cursor-pointer"
+              className="flex min-h-[34px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-400 px-2.5 sm:px-3.5 py-1.5 font-semibold text-white shadow-[0_0_18px_rgba(255,105,180,0.65)] transition hover:scale-105 hover:brightness-110 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Next Surprise</span>
