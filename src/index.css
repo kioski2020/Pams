@@ -1,0 +1,486 @@
+@import "tailwindcss";
+
+@layer base {
+  html,
+  body,
+  #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #05050a;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.font-handwriting {
+  font-family: 'Dancing Script', 'Brush Script MT', cursive;
+}
+
+.font-display-script {
+  font-family: 'Pacifico', cursive;
+}
+
+/* Twinkling Starfield */
+.star {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.star.small {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.45);
+}
+
+.star.medium {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.65);
+}
+
+.star.large {
+  width: 4px;
+  height: 4px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+/* Romantic Note Card */
+.content-display-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 249, 251, 0.98) 100%);
+  box-shadow:
+    0 20px 60px rgba(255, 105, 180, 0.18),
+    0 10px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+}
+
+.romantic-gradient-text {
+  background: linear-gradient(45deg, #8b4513, #a0522d, #8b4513, #6b3410);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: romanticText 8s ease-in-out infinite;
+}
+
+@keyframes romanticText {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 0.95;
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes blinkCursor {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background-color: #6b3410;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blinkCursor 1s infinite;
+}
+
+/* 3D Flipbook & Luxury Scrapbook Styling */
+.book-glow-aura {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 165, 208, 0.3) 0%,
+    rgba(251, 191, 36, 0.14) 45%,
+    transparent 74%
+  );
+  filter: blur(22px);
+  animation: glowPulse 3.6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.06);
+  }
+}
+
+.book-3d {
+  perspective: 2000px;
+}
+
+.book-stage {
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-page {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition:
+    transform 0.85s cubic-bezier(0.22, 0.72, 0.2, 1),
+    box-shadow 0.85s cubic-bezier(0.22, 0.72, 0.2, 1);
+  box-shadow:
+    1px 1px 0 0 rgba(245, 232, 220, 0.85),
+    3px 2px 0 0 rgba(226, 206, 192, 0.6),
+    0 14px 28px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  will-change: transform;
+}
+
+.book-page:hover {
+  box-shadow:
+    1px 1px 0 0 rgba(245, 232, 220, 0.9),
+    3px 2px 0 0 rgba(226, 206, 192, 0.65),
+    0 18px 36px rgba(255, 105, 180, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+.book-page.flipped {
+  transform: rotateY(-180deg);
+  box-shadow:
+    -1px 1px 0 0 rgba(245, 232, 220, 0.85),
+    -3px 2px 0 0 rgba(226, 206, 192, 0.6),
+    -14px 14px 28px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.book-page.flipped:hover {
+  box-shadow:
+    -1px 1px 0 0 rgba(245, 232, 220, 0.9),
+    -3px 2px 0 0 rgba(226, 206, 192, 0.65),
+    -18px 18px 36px rgba(255, 105, 180, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+.book-page-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-page-back {
+  transform: rotateY(180deg);
+}
+
+.parchment-paper {
+  background-color: #fdf8f3;
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(255, 235, 240, 0.55), transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(254, 243, 199, 0.45), transparent 55%),
+    linear-gradient(135deg, #fffdf9 0%, #f9efe7 100%);
+}
+
+.gold-foil-text {
+  background: linear-gradient(125deg, #fef08a 0%, #fbbf24 28%, #fffbeb 50%, #f59e0b 74%, #fde68a 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: foilShimmer 4.5s ease-in-out infinite;
+}
+
+@keyframes foilShimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes petalDrift {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--petal-opacity, 0.55);
+  }
+  85% {
+    opacity: var(--petal-opacity, 0.55);
+  }
+  100% {
+    transform: translate3d(var(--petal-drift, 45px), 108vh, 0) rotate(var(--petal-rot, 220deg));
+    opacity: 0;
+  }
+}
+
+.animate-petal-drift {
+  animation: petalDrift var(--petal-dur, 12s) linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes bookSparkleBurst {
+  0% {
+    opacity: 0.98;
+    transform: translate(-50%, -50%) scale(0.35) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1.25) rotate(120deg);
+  }
+}
+
+.animate-book-sparkle {
+  animation: bookSparkleBurst 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Gift Reveal & Fireworks */
+@keyframes giftCelebration {
+  0% {
+    transform: translate(-50%, -50%) scale(0.45);
+    opacity: 0;
+  }
+  55% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-gift-celebration {
+  animation: giftCelebration 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fireworkBurst {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateY(0) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(-115px) scaleY(2.6);
+  }
+}
+
+.firework-ray {
+  animation: fireworkBurst 1s ease-out forwards;
+}
+
+@keyframes floatBurstPhoto {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--tx) * 0.3), calc(-50% + var(--ty) * 0.3)) scale(1.04)
+      rotate(var(--rot));
+  }
+  80% {
+    opacity: 0.95;
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.95)
+      rotate(var(--rot));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx) * 1.15), calc(-50% + var(--ty) * 1.15 - 30px))
+      scale(0.65) rotate(var(--rot));
+  }
+}
+
+.animate-burst-photo {
+  animation: floatBurstPhoto 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatHeartParticle {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--hx)), calc(-50% + var(--hy))) scale(1.35);
+  }
+}
+
+.animate-float-heart {
+  animation: floatHeartParticle 2.4s ease-out forwards;
+}
+
+/* Music Control Pulse */
+@keyframes musicPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 18px rgba(255, 105, 180, 0.45);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 6px 26px rgba(255, 105, 180, 0.8);
+  }
+}
+
+.music-playing-pulse {
+  animation: musicPulse 1.6s ease-in-out infinite;
+}
+
+/* Heart Envelope Finale */
+@keyframes envelopeFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-envelope-float {
+  animation: envelopeFloat 3s ease-in-out infinite;
+}
+
+.envelope-3d {
+  perspective: 1200px;
+}
+
+.envelope-flap-3d {
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+@keyframes balloonHeartRise {
+  0% {
+    transform: translate3d(0, 112vh, 0) rotate(var(--rot-start, -6deg)) scale(0.92);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--balloon-opacity, 0.45);
+  }
+  30% {
+    transform: translate3d(var(--sway, 22px), 74vh, 0) rotate(var(--rot-end, 6deg)) scale(1);
+  }
+  60% {
+    transform: translate3d(calc(var(--sway, 22px) * -0.85), 34vh, 0) rotate(var(--rot-start, -6deg)) scale(1.03);
+  }
+  88% {
+    opacity: var(--balloon-opacity, 0.45);
+  }
+  100% {
+    transform: translate3d(calc(var(--sway, 22px) * 0.5), -20vh, 0) rotate(var(--rot-end, 6deg)) scale(0.96);
+    opacity: 0;
+  }
+}
+
+.animate-balloon-heart {
+  animation: balloonHeartRise var(--dur, 13s) linear infinite;
+  will-change: transform, opacity;
+}
+
+/* Shooting Stars / Star Trails */
+@keyframes shootingStarStreak {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--shoot-angle, 32deg)) scaleX(0.4);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+    transform: translate3d(calc(var(--dx, 320px) * 0.12), calc(var(--dy, 200px) * 0.12), 0)
+      rotate(var(--shoot-angle, 32deg)) scaleX(1);
+  }
+  28% {
+    opacity: 0.95;
+  }
+  42% {
+    transform: translate3d(var(--dx, 320px), var(--dy, 200px), 0)
+      rotate(var(--shoot-angle, 32deg)) scaleX(0.75);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(var(--dx, 320px), var(--dy, 200px), 0)
+      rotate(var(--shoot-angle, 32deg)) scaleX(0.75);
+    opacity: 0;
+  }
+}
+
+.animate-shooting-star {
+  animation: shootingStarStreak var(--shoot-dur, 7.5s) ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes astralOrbitReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-astral-orbit-reverse {
+  animation: astralOrbitReverse 9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .animate-heartbeat,
+  .book-glow-aura,
+  .music-playing-pulse,
+  .animate-envelope-float,
+  .animate-balloon-heart,
+  .animate-shooting-star,
+  .animate-astral-orbit-reverse,
+  .animate-petal-drift,
+  .gold-foil-text,
+  .animate-book-sparkle {
+    animation: none !important;
+  }
+  .book-page,
+  .envelope-flap-3d {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Made For Anita",
+  "description": "An interactive animated digital gift card with Matrix letter rain, particle countdown, fireworks, 3D flipbook, music player, and live customization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
